@@ -69,7 +69,7 @@ ORDER BY Count desc;
 --Question 13
 Select Album.Title as AlbumName, Track.Name TrackName, MediaType.Name as MediaType
 From Track, Album, MediaType
-Where Track.MediaTypeId = MediaType.MediaTypeId and Track.AlbumId = Album.AlbumId
+Where Track.MediaTypeId = MediaType.MediaTypeId and Track.AlbumId = Album.AlbumId;
 
 --Question 14
 Select Count(*)
