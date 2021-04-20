@@ -1,0 +1,12 @@
+William Crewe
+CPSC408
+crewe@chapman.edu
+
+Assignment 4
+
+Using python to create the 5 normalized tables for my final project
+
+The idea for the final project is to use twitters api to access different tech companies tweets and perform natural language processing on their tweets to be able to analyze their
+views on different subjects and other possible data
+
+Using command prompt the user is able to select the filename for the csv to be created, and the amount of entries to be "faked" for each of the tables
