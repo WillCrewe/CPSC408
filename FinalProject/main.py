@@ -127,7 +127,6 @@ def CreateTwitterTable():
 
 #Deletes all tables
 def DeleteTables():
-    print("Deleting tables")
     my_cursor.execute("drop table company")
     my_cursor.execute("drop table text")
     my_cursor.execute("drop table popularity")
@@ -364,6 +363,7 @@ def DisplayPrompt(val):
         print("\nPlease select which of the following queries you would like to perform:")
         print("\n1: Displaying all of the data gathered")
         print("2: Sorting tweets by the amount of likes")
+        print("3: Display each user with their total likes on all of their tweets")
 
 
 #Function for the query of displaying all of the data
@@ -397,8 +397,34 @@ def sortByLikes():
     del df
 
 
+#Function for the query to sort by likes
+def sumLikes():
+    query = '''
+    Select Username, SUM(Likes) as total
+    From(
+        SELECT TweetId, Username, Likes, Date 
+        FROM tweets
+        Natural Join text
+        Natural Join popularity
+    ) as sub
+    Group by Username
+    Order By total Desc;
+        '''
+    my_cursor.execute(query)
+    my_records = my_cursor.fetchall()
+    df = pd.DataFrame(my_records, columns=['Username', 'TotalLikes'])
+    print(df.to_string())
+    del df
+
+
 def main():
     #Creating Tables
+    #This try and except will delete the tables from a previous run through the program
+    #This is to make it possible to run if you have encountered a bug in a previous run through
+    try:
+        DeleteTables()
+    except:
+        print("\n")
     CreateTwitterTable()
     #This does not allow and queries to be ran before gathering twitter data
     isImported = False
@@ -486,8 +512,13 @@ def main():
             x6 = int(input(": "))
             if(x6 == 1):
                 DisplayAll()
+                time.sleep(3)
             elif(x6 == 2):
                 sortByLikes()
+                time.sleep(3)
+            elif(x6 == 3):
+                sumLikes()
+                time.sleep(3)
             else:
                 print("Invalid input, returning to menu")
         else:
